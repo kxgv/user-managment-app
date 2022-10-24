@@ -1,0 +1,36 @@
+<div class="login-container">
+    <div class="card">
+        <div class="card-header">
+            <h1>LogIn</h1>
+        </div>
+        <div class="card-content">
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+                <div class="form-field">
+                    <label>Username</label>
+                    <input placeholder="Username" formControlName="username" required type="text">
+                    <!-- <small class="alert-error" 
+                    *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.errors?.['required']" >
+                        The field is required
+                    </small> -->
+                    <mat-error *ngIf="isValidField('username')">
+                        {{ getErrorMessage("username") }}
+                    </mat-error>
+                </div>
+                <div class="form-field">
+                    <label>Password</label>
+                    <input placeholder="Password" formControlName="password" required type="password">
+                    <mat-error *ngIf="isValidField('password')">
+                        {{ getErrorMessage("password") }}
+                    </mat-error>
+                </div>
+                <!-- <small class="alert-error" 
+                    *ngIf="loginForm.invalid" >
+                        Usuario o contraseña incorrectos
+                </small> -->
+                <div class="card-footer" style="margin-top: 10%;">
+                    <button [disabled]="loginForm.invalid" class="btn" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

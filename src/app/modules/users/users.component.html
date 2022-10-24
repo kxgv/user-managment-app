@@ -1,0 +1,53 @@
+<nav>
+    <span class="title">Welcome!</span>
+    <div class="actions">
+        <button class="btn" (click)="onLogout()">Logout</button>
+    </div>
+</nav>
+<div class="container">
+    <div class="card fx-8">
+        <div class="card-header">
+            <div class="card-title">
+                <span>Users table</span>
+            </div>
+            <div class="card-actions row">
+                <div class="form-field no-margin" [style.marginRight.px]="10">
+                    <input placeholder="Search by name" [(ngModel)]="filterText">
+                </div>
+                <button class="btn" routerLink="/user-managment">New user</button>
+            </div>
+        </div>
+        <div class="card-content">
+            <div class="list">
+                <ng-container>
+                    <div *ngFor="let user of userList | filterUser: filterText" class="item-list row space-between">
+                        <div class="fx-3 item">
+                            {{user.name}}
+                        </div>
+                        <div class="fx-3 item">
+                            {{user.username}}
+                        </div>
+                        <div class="fx-3 item">
+                            {{user.email}}
+                        </div>
+                        <div class="fx-1">
+                            <button class="btn" routerLink="/user-managment/{{user.id}}">
+                                <i class="material-icons">
+                                    edit
+                                </i>
+                            </button>
+                            <button (click)="onDelete(user)">
+                                <i class="material-icons">
+                                    delete
+                                </i>
+                            </button>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="card-footer">
+
+        </div>
+    </div>
+</div>

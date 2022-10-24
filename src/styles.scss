@@ -1,0 +1,177 @@
+/* You can add global styles to this file, and also import other style files */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat';
+}
+
+nav{
+    padding: 0 20px;
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(212, 212, 212);
+    .title{
+        font-size: 20px;
+        color: #161616;
+    }
+}
+
+.btn{
+    padding: 10px 14px;
+    border-radius: 6px;
+    background-color: rgba($color: #51515151, $alpha: 1.0);
+    color: white;
+    border: none;
+    &:hover{
+        background-color: rgba($color: #41414141, $alpha: 1.0);
+    }
+    &:disabled,
+    &[disabled]{
+        background-color: #cccccc;
+        color: #666666;
+    }
+}
+
+.form-field{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    label{
+        width: 100%;
+        color: gray;
+        font-size: 12px;
+        padding-bottom: 3px;
+    }
+    input{
+        width: 100%;
+        padding: 8px 14px;
+        background-color: rgba(gray, 0.05);
+        border-style: solid;
+        border-width: 2px;
+        border-color: rgba(gray, 0.2);
+        border-radius: 4px;
+        position: relative;
+        transition: background-color 0.2s ease-in-out 0s, border-color 0.2s ease-in-out 0s;
+        margin-bottom: 5px;
+        &:focus {
+            background-color: white;
+            border-color: #ea5d1a;
+            outline: none;
+        }
+        &.hasError{
+            border-color: rgb(182, 77, 77);
+        }
+    }
+    .error-message{
+        color: rgb(182, 77, 77);
+    }
+    &.no-margin{ margin: 0; }
+}
+
+.alert-error{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    background-color: rgb(182, 77, 77);
+    color: white;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+
+.container{
+    padding-top: 80px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    .card{
+        border-radius: 6px;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid rgba($color: gray, $alpha: 0.3);
+        .card-header{
+            padding: 0 20px;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgb(212, 212, 212);
+            h1{
+                font-size: 20px;
+            }
+        }
+        .card-content{
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            .list{
+                display: flex;
+                width: 100%;
+                flex-direction: column;
+                .item-list{
+                    height: 40px;
+                    padding: 0 5px;
+                    display: flex;
+                    width: 100%;
+                    align-items: center;
+                    border-bottom: 1px solid rgb(212, 212, 212);
+                    .item{
+                        color: gray;
+                        font-size: 14px;
+                    }
+                    .material-icons{
+                        cursor: pointer;
+                        padding: 5px;
+                        border-radius: 50%;
+                        &:hover{
+                            background-color: rgba($color: gray, $alpha: 0.1);
+                        }
+                        &:focus{
+                            background-color: rgba($color: gray, $alpha: 0.3);
+                            outline: none;
+                        }
+                    }
+                }
+            }
+        }
+        .card-footer{
+            display: flex;
+            flex-direction: row;
+            //align-items: center;
+            //justify-content: end;
+            height: 80px;
+            padding: 10px;
+            button{
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+}
+
+.space-between{
+    justify-content: space-between;
+}
+
+.fx-1{ width: 10%; }
+.fx-3{ width: 25%; }
+.fx-6{ width: 50%; }
+.fx-8{ width: 80%; }
+.fx{ width: 100%; }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
