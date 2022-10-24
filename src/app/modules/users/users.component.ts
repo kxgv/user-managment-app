@@ -20,7 +20,17 @@ export class UsersComponent implements OnInit {
     private userService: UsersService,
     private authService: AuthService,
     private router: Router,
-  ) {
+  ) { }
+
+  ngOnInit(): void { 
+    this.getUsers();
+  }
+
+  onLogout(): void {
+    this.authService.logout(); 
+  }
+
+  getUsers() {
     this.userList = this.userService.getUsers().subscribe({
       next: (res) => {
         this.userList = res;
@@ -28,19 +38,11 @@ export class UsersComponent implements OnInit {
       error: (err) => {
         console.log(err);
       }
-    }); 
-  }
-
-  ngOnInit(): void { }
-
-  onLogout(): void {
-    this.authService.logout(); 
+    });
   }
 
   onDelete(user: UserDto) {
-
     if (confirm('Do you want to delete this user?')) {
-
       setTimeout(() => {
         this.userList = this.userList.filter((x: { id: number; }) => x.id != user.id);
       }, 2000);

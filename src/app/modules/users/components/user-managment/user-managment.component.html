@@ -8,27 +8,26 @@
     <div class="card fx-3">
         <div class="card-header">
             <div class="card-title">
-                <span>New User</span>
+                <span *ngIf="!edit; else viewEdit">New User</span>
             </div>
+            <ng-template class="card-title"  #viewEdit>
+                <span #viewEdit>Edit User</span>
+            </ng-template>
         </div>
         <div class="card-content">
             <form [formGroup]="userForm">
                 <div class="form-field">
                     <label>Name</label>
-
                     <input id="name" placeholder="Name" formControlName="name" required type="text" text="text" matInput
                         [(ngModel)]="user.name">
-
                     <mat-error *ngIf="isValidField('name')">
                         {{ getErrorMessage("name") }}
                     </mat-error>
                 </div>
                 <div class="form-field">
                     <label>Username</label>
-
                     <input placeholder="Username" formControlName="username" required type="text"
                         [(ngModel)]="user.username">
-
                     <mat-error *ngIf="isValidField('username')">
                         {{ getErrorMessage("username") }}
                     </mat-error>
@@ -54,7 +53,7 @@
                 </div>
                 <div class="card-footer" style="margin-top: 5%;">
                     <button class="btn" (click)="onBack()">Cancel</button>
-                    <button class="btn" (click)="onSave('name')">Save</button>
+                    <button class="btn" (click)="edit ? updateUser() : onSave()">Save</button>
                 </div>
             </form>
         </div>

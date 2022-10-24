@@ -1,11 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@app/modules/auth/auth.service';
 import { UserDto } from '@app/shared/models/user';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { UsersService } from '../../users.service';
 
 @Component({
@@ -17,9 +14,14 @@ export class UserManagmentComponent implements OnInit {
 
   private isValidEmail = /\S+@\S+\.\S+/;
   private isValidWebSite = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-  apiURL = environment.FAKE_API;
 
-  user: any = null;
+  user: UserDto = {
+    id: 0,
+    name: '',
+    username: '',
+    email: '',
+    website: ''
+  }
 
   userForm = this.fb.group({
     name: ['', [Validators.required]],
@@ -28,24 +30,29 @@ export class UserManagmentComponent implements OnInit {
     website: ['', [Validators.required, Validators.pattern(this.isValidWebSite)]],
   });
 
-  userDetails: any = [];
-
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
     private activatedRouter: ActivatedRoute,
-    private readonly http: HttpClient,
     private userService: UsersService,
   ) { }
 
+  public edit: boolean = false; 
+
   ngOnInit(): void {
-    console.log(this.activatedRouter.snapshot.params['id']);
-    this.userService.getUser(this.activatedRouter.snapshot.params['id']).subscribe(
-      (data) => {
-        this.user = data; 
-      },
-   );
+
+    const params = this.activatedRouter.snapshot.params; 
+
+    if(params['id']) {
+      this.userService.getUser(params['id']).subscribe(
+        res => {
+          this.user = res; 
+          this.edit = true;
+        },
+        err => console.error(err)
+      );
+    }
   }
 
   onLogout(): void {
@@ -56,11 +63,26 @@ export class UserManagmentComponent implements OnInit {
     this.router.navigate(['users']);
   }
 
-  onSave(name: string): Observable<UserDto> {
-    const body = { name: name }
-    alert("User saved!")
+  onSave() {
+    this.userService.saveUser(this.user).subscribe(
+      res => {
+        console.log(res);
+      },
+      err => console.error(err)
+    ); 
+    alert('User saved!');
     this.router.navigate(['users']);
-    return this.http.post<UserDto>(this.apiURL, body);
+  }
+
+  updateUser() {
+    this.userService.updateUser(this.user.id, this.user).subscribe(
+      res => {
+        console.log(res);
+      },
+      err => console.error(err)
+    );
+    alert('User saved!');
+    this.router.navigate(['users']);
   }
 
   getErrorMessage(field: string): string {
